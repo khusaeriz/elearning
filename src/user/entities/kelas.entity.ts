@@ -1,5 +1,6 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany, OneToOne, JoinColumn } from 'typeorm';
 import { Murid } from './murid.entity';
+import { Guru } from './guru.entity';
 
 @Entity()
 export class Kelas {
@@ -20,4 +21,12 @@ export class Kelas {
     (murid) => murid.kelas,
   )
   murid: Murid[];
+
+  @OneToOne(
+    (type) => Guru,
+    (guru) => guru.kelas,
+    { onDelete: 'CASCADE' },
+  )
+  @JoinColumn({ name: 'waliKelas' })
+  guru: Guru;
 }

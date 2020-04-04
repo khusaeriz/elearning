@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Kelas } from './kelas.entity';
 import { Nilai } from '../../kuis/entity/nilai.entity';
 import { Konsultasi } from '../../konsultasi/konsultasi.entity';
@@ -11,29 +11,33 @@ export class Murid {
   @Column()
   nisn: number;
 
-  @Column({ length: 100 })
+  @Column({ length: 100, unique: true })
   username: string;
 
   @Column({ length: 35 })
   nama: string;
 
-  @Column({ length: 40 })
+  @Column({ length: 40, nullable: true })
   ttl: string;
 
-  @Column({ length: 40 })
+  @Column({ length: 40, nullable: true })
   alamat: string;
 
-  @Column({ length: 13 })
+  @Column({ length: 13, nullable: true })
   telp: string;
 
-  @Column({ length: 25 })
+  @Column({ length: 25, nullable: true })
   email: string;
+
+  @Column({ length: 3, nullable: true })
+  kelasId: string;
 
   @ManyToOne(
     (type) => Kelas,
     (kelas) => kelas.murid,
     { onDelete: 'CASCADE' },
   )
+  @JoinColumn({ name: 'kelasId' })
   kelas: Kelas;
 
   @OneToMany(
