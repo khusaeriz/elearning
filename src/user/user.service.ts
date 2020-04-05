@@ -19,16 +19,25 @@ export class UserService {
     private readonly kelasRepository: Repository<Kelas>,
   ) {}
 
-  async getGuruByUsernameAndPassword(username: string, password: string) {
-    const guru = await this.guruRepository.findOne({ username });
+  async checkUser(username: string, password: string) {
+    const user = await this.userRepository.findOne({ username, password });
 
-    return guru === undefined ? null : guru;
+    if (user != null) {
+      if (user.hakAkses == 'guru') {
+        user.guru = await this.guruRepository.findOne(user);
+      } else {
+        user.murid = await this.muridRepository.findOne(user);
+      }
+
+      return user;
+    }
   }
 
   async add<T, E>(
     data: T[],
     repo: Repository<E>,
     filter: (data: E[], qb: Repository<E>) => Promise<E[]>,
+    userBuilder: () => User[],
   ) {
     const connection = getConnection();
     const queryRunner = connection.createQueryRunner();
@@ -37,10 +46,13 @@ export class UserService {
 
     await queryRunner.startTransaction();
     const entityNew = await filter(entity, repo);
+    const userNew = userBuilder();
 
     let entitySaved: E[];
+    let userSaved: User[];
 
     try {
+      userSaved = await queryRunner.manager.save(userNew);
       entitySaved = await queryRunner.manager.save(entityNew);
 
       await queryRunner.commitTransaction();
@@ -55,7 +67,7 @@ export class UserService {
   }
 
   async addGuru(data: AddGuruDto[]) {
-    return this.add<AddGuruDto, Guru>(
+    return this.add(
       data,
       this.guruRepository,
       async (guru, qb) => {
@@ -66,6 +78,16 @@ export class UserService {
 
         return guru.filter(
           (gr) => check.findIndex((ck) => ck.nip === gr.nip) === -1,
+        );
+      },
+      () => {
+        return data.map((dt) =>
+          this.userRepository.create({
+            username: dt.username,
+            password: dt.password,
+            nama: dt.nama,
+            hakAkses: 'guru',
+          }),
         );
       },
     );
@@ -83,6 +105,16 @@ export class UserService {
 
         return murid.filter(
           (gr) => check.findIndex((ck) => ck.nis === gr.nis) === -1,
+        );
+      },
+      () => {
+        return data.map((dt) =>
+          this.userRepository.create({
+            username: dt.username,
+            password: dt.password,
+            nama: dt.nama,
+            hakAkses: 'murid',
+          }),
         );
       },
     );

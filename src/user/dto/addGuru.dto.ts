@@ -30,26 +30,16 @@ export class AddGuruDto {
   username: string;
 
   @IsNotEmpty()
+  @Length(3, 10)
+  password: string;
+
+  @IsNotEmpty()
   @Length(1, 35)
   nama: string;
 
-  @Length(1, 40)
-  @IsOptional()
   ttl: string;
-
-  @Length(1, 40)
-  @IsOptional()
   alamat: string;
-
-  @Length(1, 20)
-  @IsOptional()
   jabatan: string;
-
-  @Length(1, 13)
-  @IsOptional()
   telp: string;
-
-  @Length(3, 25)
-  @IsOptional()
   email: string;
 }

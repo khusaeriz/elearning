@@ -1,8 +1,9 @@
-import { Entity, Column, OneToMany, OneToOne } from 'typeorm';
+import { Entity, Column, OneToMany, OneToOne, JoinColumn } from 'typeorm';
 import { KategoriKuis } from '../../kuis/entity/kategoriKuis.entity';
 import { Kuis } from '../../kuis/entity/kuis.entity';
 import { Konsultasi } from '../../konsultasi/konsultasi.entity';
 import { Kelas } from './kelas.entity';
+import { User } from './user.entity';
 
 @Entity()
 export class Guru {
@@ -38,6 +39,14 @@ export class Guru {
     (kelas) => kelas.guru,
   )
   kelas: Kelas;
+
+  @OneToOne(
+    (type) => User,
+    (user) => user.guru,
+    { cascade: ['insert'], onDelete: 'CASCADE' },
+  )
+  @JoinColumn({name: 'username'})
+  user: User;
 
   @OneToMany(
     (type) => KategoriKuis,

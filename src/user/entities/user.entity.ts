@@ -1,4 +1,6 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, OneToOne } from 'typeorm';
+import { Guru } from './guru.entity';
+import { Murid } from './murid.entity';
 
 @Entity()
 export class User {
@@ -13,4 +15,16 @@ export class User {
 
   @Column({ length: 10 })
   hakAkses: string;
+
+  @OneToOne(
+    (type) => Guru,
+    (guru) => guru.user,
+  )
+  guru: Guru;
+
+  @OneToOne(
+    (type) => Murid,
+    (murid) => murid.user,
+  )
+  murid: Murid;
 }

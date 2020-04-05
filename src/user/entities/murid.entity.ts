@@ -1,7 +1,15 @@
-import { Column, Entity, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+  OneToOne,
+} from 'typeorm';
 import { Kelas } from './kelas.entity';
 import { Nilai } from '../../kuis/entity/nilai.entity';
 import { Konsultasi } from '../../konsultasi/konsultasi.entity';
+import { User } from './user.entity';
 
 @Entity()
 export class Murid {
@@ -31,6 +39,14 @@ export class Murid {
 
   @Column({ length: 3, nullable: true })
   kelasId: string;
+
+  @OneToOne(
+    (type) => User,
+    (user) => user.murid,
+    { cascade: ['insert'], onDelete: 'CASCADE' },
+  )
+  @JoinColumn({ name: 'username' })
+  user: User;
 
   @ManyToOne(
     (type) => Kelas,

@@ -1,4 +1,7 @@
-import { Controller, Get, Body, Post } from '@nestjs/common';
+import { Controller, Body, Post } from '@nestjs/common';
+import { sign } from 'jsonwebtoken';
+
+import { JWT_SECRET } from '../config';
 import { UserService } from './user.service';
 import { AddGuruBulkDto } from './dto/addGuru.dto';
 import { AddMuridBulkDto } from './dto/addMurid.dto';
@@ -7,16 +10,16 @@ import { AddMuridBulkDto } from './dto/addMurid.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('/guru/login')
-  async loginGuru(@Body() body: any) {
-    const guru = await this.userService.getGuruByUsernameAndPassword(
-      body.username,
-      body.password,
-    );
+  @Post('/login')
+  async login(@Body() body: any) {
+    const user = await this.userService.checkUser(body.username, body.password);
+    if (user == undefined) {
+      return { error: true, message: 'User not foud' };
+    }
 
     return {
       error: false,
-      data: guru,
+      data: sign({ ...user, exp: Date.now() + 60 * 60 * 2 }, JWT_SECRET),
     };
   }
 
@@ -26,7 +29,6 @@ export class UserController {
       const guru = await this.userService.addGuru(dto.data);
       return { error: false, data: guru };
     } catch (error) {
-      console.log(error);
       return { error: true, message: error };
     }
   }
@@ -34,8 +36,8 @@ export class UserController {
   @Post('/murid/tambah')
   async tambahMurid(@Body() dto: AddMuridBulkDto) {
     try {
-    //   const murid = await this.userService.addMurid(dto.data);
-    //   return { error: false, data: murid };
+      //   const murid = await this.userService.addMurid(dto.data);
+      //   return { error: false, data: murid };
     } catch (error) {
       console.log(error);
       return { error: true, message: error };
