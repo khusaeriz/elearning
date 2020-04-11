@@ -13,11 +13,11 @@ import { User } from './user.entity';
 
 @Entity()
 export class Murid {
-  @Column({ primary: true })
-  nis: number;
+  @Column({ primary: true, length: 10 })
+  nis: string;
 
-  @Column()
-  nisn: number;
+  @Column({ length: 10 })
+  nisn: string;
 
   @Column({ length: 100, unique: true })
   username: string;

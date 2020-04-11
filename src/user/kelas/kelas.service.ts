@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Kelas } from '../entities/kelas.entity';
 import { Repository, In } from 'typeorm';
-import { AddKelasDto } from '../dto/addKelas.dto';
+import { AddKelasDto } from '../dto/add-kelas.dto';
 
 @Injectable()
 export class KelasService {

@@ -3,8 +3,8 @@ import { sign } from 'jsonwebtoken';
 
 import { JWT_SECRET } from '../config';
 import { UserService } from './user.service';
-import { AddGuruBulkDto } from './dto/addGuru.dto';
-import { AddMuridBulkDto } from './dto/addMurid.dto';
+import { AddGuruBulkDto } from './dto/add-guru.dto';
+import { AddMuridBulkDto } from './dto/add-murid.dto';
 
 @Controller('user')
 export class UserController {
@@ -36,8 +36,8 @@ export class UserController {
   @Post('/murid/tambah')
   async tambahMurid(@Body() dto: AddMuridBulkDto) {
     try {
-      //   const murid = await this.userService.addMurid(dto.data);
-      //   return { error: false, data: murid };
+      const murid = await this.userService.addMurid(dto.data);
+      return { error: false, data: murid };
     } catch (error) {
       console.log(error);
       return { error: true, message: error };

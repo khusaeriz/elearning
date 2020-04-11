@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Inject } from '@nestjs/common';
-import { AddKelasBulkDto } from '../dto/addKelas.dto';
+import { AddKelasBulkDto } from '../dto/add-kelas.dto';
 import { KelasService } from './kelas.service';
 
 @Controller('kelas')

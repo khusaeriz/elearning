@@ -4,9 +4,10 @@ import { User } from './entities/user.entity';
 import { Guru } from './entities/guru.entity';
 import { Murid } from './entities/murid.entity';
 import { Repository, getConnection, In } from 'typeorm';
-import { AddGuruDto } from './dto/addGuru.dto';
-import { AddMuridDto } from './dto/addMurid.dto';
+import { AddGuruDto } from './dto/add-guru.dto';
+import { AddMuridDto } from './dto/add-murid.dto';
 import { Kelas } from './entities/kelas.entity';
+import { UserDetail } from './user-detail.interface';
 
 @Injectable()
 export class UserService {
@@ -20,13 +21,13 @@ export class UserService {
   ) {}
 
   async checkUser(username: string, password: string) {
-    const user = await this.userRepository.findOne({ username, password });
+    const user = await this.userRepository.findOne({ username, password }) as UserDetail;
 
     if (user != null) {
       if (user.hakAkses == 'guru') {
-        user.guru = await this.guruRepository.findOne(user);
+        user.detail = await this.guruRepository.findOne(user);
       } else {
-        user.murid = await this.muridRepository.findOne(user);
+        user.detail = await this.muridRepository.findOne(user);
       }
 
       return user;
