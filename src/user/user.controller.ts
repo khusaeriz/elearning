@@ -1,4 +1,4 @@
-import { Controller, Body, Post } from '@nestjs/common';
+import { Controller, Body, Post, Get } from '@nestjs/common';
 import { sign } from 'jsonwebtoken';
 
 import { JWT_SECRET } from '../config';
@@ -39,8 +39,17 @@ export class UserController {
       const murid = await this.userService.addMurid(dto.data);
       return { error: false, data: murid };
     } catch (error) {
-      console.log(error);
       return { error: true, message: error };
     }
+  }
+
+  @Get('/guru')
+  async listGuru() {
+    return { error: false, data: await this.userService.listGuru() };
+  }
+
+  @Get('/murid')
+  async listMurid() {
+    return { error: false, data: await this.userService.listMurid() };
   }
 }

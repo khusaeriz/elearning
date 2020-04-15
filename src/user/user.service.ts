@@ -120,4 +120,12 @@ export class UserService {
       },
     );
   }
+
+  async listGuru() {
+    return this.guruRepository.find();
+  }
+
+  async listMurid() {
+    return this.muridRepository.find();
+  }
 }

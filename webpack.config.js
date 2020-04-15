@@ -2,7 +2,7 @@ const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
-  entry: './resources/main.js',
+  entry: ['babel-polyfill', './resources/main.js'],
   module: {
     rules: [
       { test: /\.js$/, use: 'babel-loader' },
