@@ -7,9 +7,10 @@ import { UserModule } from './user/user.module';
 import { MatpelModule } from './matpel/matpel.module';
 import { KuisModule } from './kuis/kuis.module';
 import { KonsultasiModule } from './konsultasi/konsultasi.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UserModule, MatpelModule, KuisModule, KonsultasiModule],
+  imports: [TypeOrmModule.forRoot(), UserModule, MatpelModule, KuisModule, KonsultasiModule, DashboardModule],
   controllers: [AppController],
   providers: [AppService, UserService],
 })

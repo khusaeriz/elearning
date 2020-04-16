@@ -30,6 +30,7 @@
     "bootstrap-vue": "^2.0.0-rc.24",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.1",
+    "js-base64": "^2.5.2",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.0.0",
     "reflect-metadata": "^0.1.13",

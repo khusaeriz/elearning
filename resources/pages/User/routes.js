@@ -1,7 +1,11 @@
+import GuruHome from './Guru/Home.vue';
 import MuridHome from './Murid/Home.vue';
-import GuruHome from "./Guru/Home.vue";
+import AddMurid from "./Murid/AddMurid.vue";
 
-const muridRoutes = [{ path: '/user/murid', component: MuridHome }];
 const guruRoutes = [{ path: '/user/guru', component: GuruHome }];
+const muridRoutes = [
+  { path: '/user/murid', component: MuridHome },
+  { path: '/user/murid/tambah', component: AddMurid },
+];
 
 export default [...muridRoutes, ...guruRoutes];

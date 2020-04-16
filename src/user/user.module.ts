@@ -11,7 +11,7 @@ import { KelasService } from './kelas/kelas.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Guru, Murid, Kelas])],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, UserService],
   providers: [UserService, KelasService],
   controllers: [UserController, KelasController],
 })

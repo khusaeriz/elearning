@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, OneToMany, OneToOne, JoinColumn, ManyToOne } from 'typeorm';
 import { KategoriKuis } from '../../kuis/entity/kategoriKuis.entity';
 import { Kuis } from '../../kuis/entity/kuis.entity';
 import { Konsultasi } from '../../konsultasi/konsultasi.entity';

@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Matpel } from '../../matpel/entities/matpel.entity';
 import { Guru } from '../../user/entities/guru.entity';
 import { Kuis } from './kuis.entity';
@@ -14,6 +14,12 @@ export class KategoriKuis {
   @Column()
   jumlahSoal: number;
 
+  @Column()
+  _matpel: string;
+
+  @Column()
+  _guru: string;
+
   @OneToMany(
     (type) => Kuis,
     (kuis) => kuis.kategoriKuis,
@@ -25,11 +31,13 @@ export class KategoriKuis {
     (matpel) => matpel.kategoriKuis,
     { onDelete: 'CASCADE' },
   )
+  @JoinColumn({ name: '_matpel' })
   matpel: Matpel;
 
   @ManyToOne(
     (type) => Guru,
     (guru) => guru.kategoriKuis,
   )
+  @JoinColumn({ name: '_guru' })
   guru: Guru;
 }

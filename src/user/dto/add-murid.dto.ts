@@ -27,13 +27,16 @@ export class AddMuridDto {
   @IsNotEmpty()
   @Length(2, 100)
   username: string;
-  
+
   @IsNotEmpty()
   @Length(3, 10)
   password: string;
 
   @IsNotEmpty()
   nama: string;
+
+  @IsNotEmpty()
+  kelasId: string;
 
   ttl: string;
   alamat: string;

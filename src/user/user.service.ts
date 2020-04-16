@@ -21,7 +21,11 @@ export class UserService {
   ) {}
 
   async checkUser(username: string, password: string) {
-    const user = await this.userRepository.findOne({ username, password }) as UserDetail;
+    const user = (await this.userRepository.findOne({
+      username,
+      password,
+    })) as UserDetail;
+    user.password = undefined;
 
     if (user != null) {
       if (user.hakAkses == 'guru') {

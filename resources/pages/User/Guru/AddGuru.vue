@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-button v-b-modal.modal-prevent-closing>Tambah Guru</b-button>
+    <b-button v-b-modal.modal-prevent-closing variant="primary">Tambah Guru</b-button>
 
     <b-modal
       id="modal-prevent-closing"
@@ -18,7 +18,7 @@
           label-for="userame-input"
           invalid-feedback="Username tidak boleh kosong"
         >
-          <b-form-input id="userame-input" v-model="data.userame" :state="formState" required></b-form-input>
+          <b-form-input id="userame-input" v-model="data.username" :state="formState" required></b-form-input>
         </b-form-group>
 
         <b-form-group
@@ -131,6 +131,7 @@ export default {
       }
       try {
         await this.$http.post('/user/guru/tambah', { data: [this.data] });
+        this.$emit('tambah', this.data);
         // Hide the modal manually
         this.$nextTick(() => {
           this.$bvModal.hide('modal-prevent-closing');

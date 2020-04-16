@@ -1,6 +1,6 @@
 <template>
   <div>
-    <page-title title="Manajemen Materi"></page-title>
+    <page-title title="Forum"></page-title>
   </div>
 </template>
 <script>

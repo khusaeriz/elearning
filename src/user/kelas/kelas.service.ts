@@ -11,5 +11,26 @@ export class KelasService {
     private readonly kelasRepository: Repository<Kelas>,
   ) {}
 
-  async addKelas(data: AddKelasDto[]) {}
+  async getAll() {
+    return this.kelasRepository.find({
+      relations: ['guru'],
+      order: { idKelas: 'DESC' },
+    });
+  }
+
+  async addKelas(data: AddKelasDto[]) {
+    const newKelas: Kelas[] = await Promise.all(
+      data.map(async (dt) => {
+        const kelas = this.kelasRepository.create(dt);
+
+        if (await this.kelasRepository.findOne({ idKelas: dt.idKelas })) {
+          throw Error('ID Kelas sudah digunakan');
+        }
+
+        return kelas;
+      }),
+    );
+
+    return this.kelasRepository.insert(newKelas);
+  }
 }

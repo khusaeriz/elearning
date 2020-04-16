@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Inject } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Inject,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { AddKelasBulkDto } from '../dto/add-kelas.dto';
 import { KelasService } from './kelas.service';
 
@@ -8,7 +16,7 @@ export class KelasController {
 
   @Get()
   async listKelas() {
-    return [];
+    return { error: false, data: await this.kelasSevice.getAll() };
   }
 
   @Post()
@@ -17,7 +25,10 @@ export class KelasController {
       const kelas = await this.kelasSevice.addKelas(dto.data);
       return { error: false, data: kelas };
     } catch (error) {
-      return { error: false, message: error };
+      throw new HttpException(
+        { error: false, message: error },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }
