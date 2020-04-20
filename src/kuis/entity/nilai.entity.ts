@@ -1,10 +1,10 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Murid } from '../../user/entities/murid.entity';
 import { Matpel } from '../../matpel/entities/matpel.entity';
 
 @Entity()
 export class Nilai {
-  @Column({ primary: true })
+  @PrimaryGeneratedColumn()
   idNilai: number;
 
   @Column()

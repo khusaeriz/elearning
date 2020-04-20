@@ -5,16 +5,23 @@
       <div class="row justify-content-md-center">
         <div class="col-3 text-center" v-if="getRole() === 'admin'">
           <div class="p-5 bg-white">
-            <div class="icon">icons</div>
+            <div class="icon mx-auto">
+              <v-icon name="user" class="icon-dashboard mx-auto text-success"></v-icon>
+            </div>
             <div class="count">1</div>
           </div>
           <div class="link bg-success p-2">
             <a href="#" class="text-white">Data Pengajar</a>
           </div>
         </div>
-        <div class="col-3 text-center" v-if="['guru', 'admin'].includes(getRole())">
+        <div
+          class="col-3 text-center"
+          v-if="['guru', 'admin'].includes(getRole())"
+        >
           <div class="p-5 bg-white">
-            <div class="icon">icons</div>
+            <div class="icon mx-auto">
+              <v-icon name="users" class="icon-dashboard mx-auto text-warning"></v-icon>
+            </div>
             <div class="count">1</div>
           </div>
           <div class="link bg-warning p-2">
@@ -23,7 +30,9 @@
         </div>
         <div class="col-3 text-center">
           <div class="p-5 bg-white">
-            <div class="icon">icons</div>
+            <div class="icon mx-auto">
+              <v-icon name="monitor" class="icon-dashboard mx-auto text-danger"></v-icon>
+            </div>
             <div class="count">1</div>
           </div>
           <div class="link bg-danger p-2">
@@ -32,11 +41,13 @@
         </div>
         <div class="col-3 text-center">
           <div class="p-5 bg-white">
-            <div class="icon">icons</div>
+            <div class="icon mx-auto">
+              <v-icon name="message-square" class="icon-dashboard mx-auto text-info"></v-icon>
+            </div>
             <div class="count">1</div>
           </div>
           <div class="link bg-info p-2">
-            <a href="#" class="text-white">Materi</a>
+            <a href="#" class="text-white">Konsultasi</a>
           </div>
         </div>
       </div>
@@ -53,3 +64,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.icon {
+  width: 50px;
+}
+</style>

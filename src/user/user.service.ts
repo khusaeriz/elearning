@@ -25,9 +25,10 @@ export class UserService {
       username,
       password,
     })) as UserDetail;
-    user.password = undefined;
 
     if (user != null) {
+      user.password = undefined;
+      
       if (user.hakAkses == 'guru') {
         user.detail = await this.guruRepository.findOne(user);
       } else {

@@ -1,4 +1,34 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Post, Body, Inject, Get, Param } from '@nestjs/common';
+import { CreateKategoriKuisDto } from './dto/createKategoriKuis.dto';
+import { KuisService } from './kuis.service';
+import { GetUser } from '../user/user.decorator';
+import { UserDetail } from '../user/user-detail.interface';
+import { Guru } from '../user/entities/guru.entity';
 
 @Controller('kuis')
-export class KuisController {}
+export class KuisController {
+  constructor(@Inject(KuisService) private kuisService: KuisService) {}
+
+  @Get()
+  async index(@GetUser() user: UserDetail) {
+    const detail = user.detail as Guru;
+    return { error: false, data: await this.kuisService.getAll(detail) };
+  }
+
+  @Get(':id')
+  async detail(@Param('id') id: number) {
+    return { error: false, data: await this.kuisService.getOne(id) };
+  }
+
+  @Post()
+  async add(@GetUser() user: UserDetail, @Body() data: CreateKategoriKuisDto) {
+    const detail = user.detail as Guru;
+
+    try {
+      const kuis = await this.kuisService.create(detail, data);
+      return { error: false, data: kuis };
+    } catch (error) {
+      return { error: true, message: error.toString() };
+    }
+  }
+}

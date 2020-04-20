@@ -20,11 +20,12 @@ Vue.prototype.$http = Axios;
 Vue.mixin({
   created() {
     if (window.sessionStorage.getItem('token') != null) {
-      this.$http.defaults.headers.common.authorization = window.sessionStorage.getItem(
-        'token',
-      );
+      const token = window.sessionStorage.getItem('token');
+
+      this.$http.defaults.headers.common.authorization = token;
     }
   },
+
   methods: {
     checkAuth() {
       if (!this.isLogin()) {
@@ -50,8 +51,26 @@ Vue.mixin({
   },
 });
 
+const router = new VueRouter({ routes });
+router.beforeEach((to, from, next) => {
+  if (to.path == '/logout' || to.path == '/login') {
+    return next();
+  }
+
+  const token = window.sessionStorage.getItem('token');
+  if (token) {
+    const decoded = JSON.parse(Base64.decode(token.split('.')[1]));
+
+    if (Date.now() > decoded.exp * 1000) {
+      return next({ path: '/logout' });
+    }
+  }
+
+  next();
+});
+
 new Vue({
-  router: new VueRouter({ routes }),
+  router: router,
   el: '#app',
   render: (h) => h(App),
 });

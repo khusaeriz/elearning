@@ -1,10 +1,16 @@
-import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { KategoriKuis } from './kategoriKuis.entity';
 import { Guru } from '../../user/entities/guru.entity';
 
 @Entity()
 export class Kuis {
-  @Column({ primary: true })
+  @PrimaryGeneratedColumn()
   idKuis: number;
 
   @Column({ type: 'text' })

@@ -19,7 +19,9 @@ export class UserController {
 
     return {
       error: false,
-      data: sign({ ...user, exp: Date.now() + 60 * 60 * 2 }, JWT_SECRET),
+      data: sign({ ...user }, JWT_SECRET, {
+        expiresIn: '2h',
+      }),
     };
   }
 

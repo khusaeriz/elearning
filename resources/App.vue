@@ -20,7 +20,7 @@
 
       <div class="row">
         <div class="sidebar col-md-3 col-lg-2">
-          <ul class="navbar-nav mt-2">
+          <ul class="navbar-nav mt-2" v-if="isLogin()">
             <li class="nav-item">
               <router-link class="nav-link" to="/"
                 ><v-icon name="bar-chart-2"></v-icon> Dashboard</router-link
@@ -81,10 +81,17 @@
               </router-link>
             </li>
           </ul>
+          <ul v-else>
+            <h3 class="text-white">
+              Silahkan Login untuk mengakses website
+            </h3>
+          </ul>
         </div>
 
         <div class="content col-md-9 col-lg-10 p-3">
-          <router-view></router-view>
+          <b-overlay :show="loading" rounded="sm">
+            <router-view></router-view>
+          </b-overlay>
         </div>
       </div>
     </div>
@@ -95,7 +102,17 @@ export default {
   data() {
     return {
       roles: { admin: 'Administrator', guru: 'Guru', murid: 'Murid' },
+      loading: false,
     };
+  },
+
+  created() {
+    this.$root.$on('loading-on', () => {
+      this.loading = true;
+    });
+    this.$root.$on('loading-off', () => {
+      this.loading = false;
+    });
   },
 };
 </script>

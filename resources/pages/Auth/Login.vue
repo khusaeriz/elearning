@@ -10,7 +10,9 @@
           <b-form-input type="password" v-model="password"></b-form-input>
         </b-form-group>
 
-        <b-button type="submit" variant="primary" @click="login">Submit</b-button>
+        <b-button type="submit" variant="primary" @click="login"
+          >Submit</b-button
+        >
       </b-form>
     </div>
   </div>
@@ -35,18 +37,25 @@ export default {
   methods: {
     async login(e) {
       e.preventDefault();
-      const res = await this.$http.post('user/login', {
-        username: this.username,
-        password: this.password,
-      });
 
-      if (res.data.error) {
+      try {
+        const res = await this.$http.post('user/login', {
+          username: this.username,
+          password: this.password,
+        });
+
+        if (res.data.error) {
+          window.alert('Login Gagal');
+          return;
+        }
+
+        window.sessionStorage.setItem('token', res.data.data);
+        this.$http.defaults.headers.common.authorization = res.data.data;
+        this.$router.push({ path: '/' });
+      } catch (error) {
         window.alert('Login Gagal');
         return;
       }
-      window.sessionStorage.setItem('token', res.data.data);
-      this.$http.defaults.headers.common.authorization = res.data.data;
-      this.$router.push({ path: '/' });
     },
   },
 };

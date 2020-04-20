@@ -5,10 +5,11 @@ import { resolve } from 'path';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
   @Get()
   getHello(): string {
-    return readFileSync(resolve(__dirname, '..', 'resources', 'index.html'), 'utf8');
+    return readFileSync(
+      resolve(__dirname, '..', 'resources', 'index.html'),
+      'utf8',
+    );
   }
 }

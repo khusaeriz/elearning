@@ -1,11 +1,18 @@
-import { Entity, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Matpel } from '../../matpel/entities/matpel.entity';
 import { Guru } from '../../user/entities/guru.entity';
 import { Kuis } from './kuis.entity';
 
 @Entity()
 export class KategoriKuis {
-  @Column({ primary: true })
+  @PrimaryGeneratedColumn()
   idKategoriKuis: number;
 
   @Column({ length: 35 })
