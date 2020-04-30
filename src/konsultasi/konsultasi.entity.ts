@@ -4,13 +4,14 @@ import {
   ManyToOne,
   JoinColumn,
   CreateDateColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Guru } from '../user/entities/guru.entity';
 import { Murid } from '../user/entities/murid.entity';
 
 @Entity()
 export class Konsultasi {
-  @Column({ primary: true, length: 34 })
+  @PrimaryGeneratedColumn()
   idKonsultasi: string;
 
   @CreateDateColumn()
@@ -23,7 +24,7 @@ export class Konsultasi {
   pertanyaan: string;
 
   @Column({ length: 15, default: 'wait' })
-  status: string;
+  status: 'wait' | 'replied';
 
   @Column({ type: 'text', nullable: true })
   jawaban: string;

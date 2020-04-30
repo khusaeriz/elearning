@@ -12,10 +12,15 @@ export class KuisService {
     private katKuisRepo: Repository<KategoriKuis>,
   ) {}
 
-  getAll(guru: Guru) {
+  /**
+   * get data kategori kuis berdasarkan guru
+   * @param Guru
+   */
+  getAllForGuru(guru: Guru) {
     let options: any = {
-      relations: ['guru'],
+      relations: ['guru', 'matpel'],
     };
+
     if (guru != null) {
       options.where = { guru };
     }
@@ -23,6 +28,10 @@ export class KuisService {
     return this.katKuisRepo.find(options);
   }
 
+  /**
+   * get detail kategori kuis
+   * @param id
+   */
   getOne(id: number) {
     return this.katKuisRepo.findOne({
       where: { idKategoriKuis: id },
@@ -30,6 +39,11 @@ export class KuisService {
     });
   }
 
+  /**
+   * buat kategori kuis
+   * @param guru
+   * @param data
+   */
   async create(guru: Guru, data: CreateKategoriKuisDto) {
     const katKuis = this.katKuisRepo.create(data);
     katKuis.guru = guru;

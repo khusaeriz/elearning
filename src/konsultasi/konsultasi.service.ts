@@ -19,14 +19,17 @@ export class KonsultasiService {
    * @param user
    */
   async getByUser(user: UserDetail, query: ListKonsultasiDto) {
-    const where = {};
-    where[user.hakAkses] = user.detail;
+    const options: any = {
+      relations: ['guru', 'murid'],
+      where: {},
+    };
+    options['where'][user.hakAkses] = user.detail;
 
     if ('status' in query) {
-      where['status'] = query.status;
+      options['where']['status'] = query.status;
     }
 
-    return this.konsultasiRepository.find(where);
+    return this.konsultasiRepository.find(options);
   }
 
   /**
@@ -39,5 +42,14 @@ export class KonsultasiService {
 
     const newKonsultasi = await this.konsultasiRepository.save(konsultasi);
     return newKonsultasi;
+  }
+
+  async reply(idKonsultasi: number, reply: string) {
+    const konsultasi = await this.konsultasiRepository.findOne(idKonsultasi);
+    konsultasi.jawaban = reply;
+    konsultasi.status = 'replied'; // sudah di jawab
+
+    this.konsultasiRepository.save(konsultasi);
+    return konsultasi;
   }
 }

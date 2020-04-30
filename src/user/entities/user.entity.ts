@@ -14,7 +14,7 @@ export class User {
   nama: string;
 
   @Column({ length: 10 })
-  hakAkses: string;
+  hakAkses: 'murid' | 'guru' | 'admin';
 
   @OneToOne(
     (type) => Guru,

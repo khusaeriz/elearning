@@ -16,9 +16,9 @@ export class KonsultasiController {
     return this.konsulService.getByUser(user, query);
   }
 
-  @Post()
+  @Post('tanya')
   async create(@GetUser() user: UserDetail, @Body() dto: CreateKonsultasiDto) {
-    if (user.hakAkses == 'sguru') {
+    if (user.hakAkses == 'guru') {
       return { error: true, message: 'invalid user permission' };
     }
 

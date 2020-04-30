@@ -10,6 +10,7 @@
           <th width="5%">No</th>
           <th>Nama</th>
           <th>Jumlah Soal</th>
+          <th>Mata Pelajaran</th>
           <th v-if="getRole() == 'admin'">Guru</th>
           <th width="5%"></th>
         </tr>
@@ -19,6 +20,7 @@
           <td>{{ i + 1 }}</td>
           <td>{{ item.nama }}</td>
           <td>{{ item.jumlahSoal }}</td>
+          <td>{{ item.matpel.namaMatpel }}</td>
           <td v-if="getRole() == 'admin'">{{ item.guru.nama }}</td>
           <td>
             <router-link :to="'/quiz/tambah-soal/' + item.idKategoriKuis">

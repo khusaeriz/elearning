@@ -1,7 +1,12 @@
-import Home from "./Home/Home.vue";
+import App from "./App.vue";
+import Home from "./Home.vue";
+import Tambah from "./Tambah.vue";
 
 export default {
   path: '/konsultasi',
-  component: Home,
-  children: [],
+  component: App,
+  children: [
+    {path: '', component: Home},
+    {path: 'tambah', component: Tambah}
+  ],
 };

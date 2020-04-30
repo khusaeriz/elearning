@@ -88,11 +88,11 @@
           </ul>
         </div>
 
-        <div class="content col-md-9 col-lg-10 p-3">
-          <b-overlay :show="loading" rounded="sm">
+        <b-overlay :show="loading" rounded="sm" class="content col-md-9 col-lg-10 p-3">
+          <div class="">
             <router-view></router-view>
-          </b-overlay>
-        </div>
+          </div>
+        </b-overlay>
       </div>
     </div>
   </div>

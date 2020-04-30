@@ -11,8 +11,20 @@ export class KuisController {
 
   @Get()
   async index(@GetUser() user: UserDetail) {
-    const detail = user.detail as Guru;
-    return { error: false, data: await this.kuisService.getAll(detail) };
+    if (user.hakAkses === 'guru') {
+      const detail = user.detail as Guru;
+      return {
+        error: false,
+        data: await this.kuisService.getAllForGuru(detail),
+      };
+    } else if (user.hakAkses === 'murid') {
+      
+      const detail = user.detail as Guru;
+      return {
+        error: false,
+        data: await this.kuisService.getAllForGuru(detail),
+      };
+    }
   }
 
   @Get(':id')
