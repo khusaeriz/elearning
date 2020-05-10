@@ -2,13 +2,11 @@
 
 ## Instalasi
 
-System requirement:
+software requirement:
 - [nodejs](nodejs.org)
 - Database mysql/postgresql
 
-Setelah menginstall ```nodejs``` dan ```database```, edit file ```ormconfig.json``` dan sesuaikan dengan database yang digunakan.
-
-Untuk pengguna windows, jalankan file ```install.bat``` untuk menginstall dependecy dan memulai aplikasi.  
+Setelah menginstall software requirement, jalankan file ```install.bat``` untuk menginstall dependecy dan memulai aplikasi.  
 setelah aplikasi berjalan, buka browser lalu masuk ke http://localhost:3000
 
 ## Fitur
