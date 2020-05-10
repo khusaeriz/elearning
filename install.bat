@@ -1,1 +1,1 @@
-npm i && npm run start
+npm i && node src/install.js && npm run start
