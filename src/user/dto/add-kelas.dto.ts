@@ -7,13 +7,6 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class AddKelasBulkDto {
-  @IsArray()
-  @ValidateNested({ each: true })
-  @ArrayMinSize(1)
-  @Type(() => AddKelasDto)
-  data: AddKelasDto[];
-}
 
 export class AddKelasDto {
   @IsNotEmpty()
@@ -25,8 +18,16 @@ export class AddKelasDto {
   namaKelas: string;
 
   @IsNotEmpty()
-  @Length(10, 10)
   waliKelas: string;
 
   keterangan: string;
+}
+
+
+export class AddKelasBulkDto {
+  @IsArray()
+  @ValidateNested({ each: true })
+  @ArrayMinSize(1)
+  @Type(() => AddKelasDto)
+  data: AddKelasDto[];
 }

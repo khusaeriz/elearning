@@ -7,14 +7,6 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class AddMuridBulkDto {
-  @IsArray()
-  @ValidateNested({ each: true })
-  @ArrayMinSize(1)
-  @Type(() => AddMuridDto)
-  data: AddMuridDto[];
-}
-
 export class AddMuridDto {
   @IsNotEmpty()
   @Length(2, 10)
@@ -42,4 +34,12 @@ export class AddMuridDto {
   alamat: string;
   telp: string;
   email: string;
+}
+
+export class AddMuridBulkDto {
+  @IsArray()
+  @ValidateNested({ each: true })
+  @ArrayMinSize(1)
+  @Type(() => AddMuridDto)
+  data: AddMuridDto[];
 }

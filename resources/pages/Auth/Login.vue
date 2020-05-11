@@ -1,19 +1,27 @@
 <template>
   <div>
     <div class="container">
-      <b-form>
-        <h1>Login</h1>
-        <b-form-group label="Username">
-          <b-form-input v-model="username"></b-form-input>
-        </b-form-group>
-        <b-form-group label="password">
-          <b-form-input type="password" v-model="password"></b-form-input>
-        </b-form-group>
+      <div class="row">
+        <div class="col-md-5 bg-white p-3 rounded pb-5">
+          <b-form class="">
+            <h1>Login</h1>
+            <b-form-group label="Username">
+              <b-form-input v-model="username"></b-form-input>
+            </b-form-group>
+            <b-form-group label="password">
+              <b-form-input type="password" v-model="password"></b-form-input>
+            </b-form-group>
 
-        <b-button type="submit" variant="primary" @click="login"
-          >Submit</b-button
-        >
-      </b-form>
+            <b-button type="submit" variant="primary" @click="login">
+              Submit
+            </b-button>
+          </b-form>
+        </div>
+        <div class="col-md-5  offset-md-1 rounded alert alert-light">
+          <b>Info</b>
+          
+        </div>
+      </div>
     </div>
   </div>
 </template>

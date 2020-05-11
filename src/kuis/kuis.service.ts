@@ -4,12 +4,15 @@ import { Repository } from 'typeorm';
 import { CreateKategoriKuisDto } from './dto/createKategoriKuis.dto';
 import { KategoriKuis } from './entity/kategoriKuis.entity';
 import { Guru } from '../user/entities/guru.entity';
+import { CreateKuisBulkDto } from './dto/createKuis.dto';
+import { Kuis } from './entity/kuis.entity';
 
 @Injectable()
 export class KuisService {
   constructor(
     @InjectRepository(KategoriKuis)
     private katKuisRepo: Repository<KategoriKuis>,
+    @InjectRepository(Kuis) private kuisRepo: Repository<Kuis>,
   ) {}
 
   /**
@@ -17,7 +20,7 @@ export class KuisService {
    * @param Guru
    */
   getAllForGuru(guru: Guru) {
-    let options: any = {
+    const options: any = {
       relations: ['guru', 'matpel'],
     };
 
@@ -33,10 +36,17 @@ export class KuisService {
    * @param id
    */
   getOne(id: number) {
-    return this.katKuisRepo.findOne({
-      where: { idKategoriKuis: id },
-      relations: ['kuis'],
-    });
+    return this.katKuisRepo
+      .createQueryBuilder('katkuis')
+      .leftJoinAndSelect('katkuis.kuis', 'kuis')
+      .leftJoinAndSelect('katkuis.matpel', 'matpel')
+      .where({ idKategoriKuis: id })
+      .orderBy('kuis.idKuis')
+      .getOne();
+    //   ({
+    //   where: { idKategoriKuis: id },
+    //   relations: ['kuis', 'matpel'],
+    // });
   }
 
   /**
@@ -49,5 +59,19 @@ export class KuisService {
     katKuis.guru = guru;
 
     return this.katKuisRepo.save(katKuis);
+  }
+
+  /**
+   * saveSoal
+   */
+  async saveSoal(guru: Guru, dto: CreateKuisBulkDto) {
+    return this.kuisRepo.save(
+      dto.kuis.map((e) => {
+        const soal = Object.assign(this.kuisRepo.create(), e);
+        soal._guru = guru.nip;
+
+        return soal;
+      }),
+    );
   }
 }

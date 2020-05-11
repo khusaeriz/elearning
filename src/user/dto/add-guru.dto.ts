@@ -4,25 +4,16 @@ import {
   ValidateNested,
   ArrayMinSize,
   Length,
-  IsOptional,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class AddGuruBulkDto {
-  @IsArray()
-  @ValidateNested({ each: true })
-  @ArrayMinSize(1)
-  @Type(() => AddGuruDto)
-  data: AddGuruDto[];
-}
-
 export class AddGuruDto {
   @IsNotEmpty()
-  @Length(10, 10)
+  // @Length(10, 10)
   nip: string;
 
   @IsNotEmpty()
-  @Length(16, 16)
+  // @Length(16, 16)
   nuptk: string;
 
   @IsNotEmpty()
@@ -42,4 +33,12 @@ export class AddGuruDto {
   jabatan: string;
   telp: string;
   email: string;
+}
+
+export class AddGuruBulkDto {
+  @IsArray()
+  @ValidateNested({ each: true })
+  @ArrayMinSize(1)
+  @Type(() => AddGuruDto)
+  data: AddGuruDto[];
 }

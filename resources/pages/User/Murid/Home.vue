@@ -1,9 +1,9 @@
 <template>
   <div>
     <page-title title="Manajemen Murid"></page-title>
-    <router-link class="btn btn-primary" to="/user/murid/tambah"
-      >Tambah Murid</router-link
-    >
+    <router-link class="btn btn-primary" to="/user/murid/tambah">
+      Tambah Murid
+    </router-link>
 
     <table-content>
       <thead>
@@ -42,6 +42,7 @@ export default {
 
   async created() {
     this.fetch();
+    this.$root.$on('tambah-murid', this.fetch);
   },
 
   methods: {

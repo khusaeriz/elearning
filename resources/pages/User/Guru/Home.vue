@@ -1,7 +1,7 @@
 <template>
   <div>
     <page-title title="Manajemen Guru"></page-title>
-    <add-guru @tambah="update()"></add-guru>
+    <add-guru @tambah="fetch()"></add-guru>
 
     <table-content :contents="getTableContents()">
       <thead>

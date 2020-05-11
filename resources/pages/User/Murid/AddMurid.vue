@@ -116,11 +116,21 @@ export default {
     },
 
     async save() {
-      this.siswa.map((data) => {
+      console.log(this.siswa);
+      
+      const data = this.siswa.map((data) => {
         data.kelasId = this.kelas;
+        return data;
       });
 
-      await this.$http.post('/user/murid/tambah', { data: this.siswa });
+      try {
+        await this.$http.post('/user/murid/tambah', { data });
+
+        this.$router.push('/user/murid');
+        this.$root.$emit('tambah-murid');
+      } catch (error) {
+        window.alert('gagal menambah data murid');
+      }
     },
   },
 };

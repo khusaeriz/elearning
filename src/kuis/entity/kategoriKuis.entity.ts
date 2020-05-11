@@ -28,13 +28,13 @@ export class KategoriKuis {
   _guru: string;
 
   @OneToMany(
-    (type) => Kuis,
+    () => Kuis,
     (kuis) => kuis.kategoriKuis,
   )
   kuis: Kuis[];
 
   @ManyToOne(
-    (type) => Matpel,
+    () => Matpel,
     (matpel) => matpel.kategoriKuis,
     { onDelete: 'CASCADE' },
   )
@@ -42,7 +42,7 @@ export class KategoriKuis {
   matpel: Matpel;
 
   @ManyToOne(
-    (type) => Guru,
+    () => Guru,
     (guru) => guru.kategoriKuis,
   )
   @JoinColumn({ name: '_guru' })

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <router-link to="/quiz/tambah" class="btn btn-primary">
+
+    <router-link to="/quiz/tambah" class="btn btn-primary" v-if="getRole() === 'guru'">
       Tambah Kuis
     </router-link>
 

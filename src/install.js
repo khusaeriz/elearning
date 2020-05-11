@@ -5,6 +5,7 @@ const chalk = require('chalk');
 const figlet = require('figlet');
 const fs = require('fs');
 const typeorm = require('typeorm');
+const cp = require('child_process');
 
 const _config = require(__dirname + '/../ormconfig.json');
 

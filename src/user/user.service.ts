@@ -55,10 +55,11 @@ export class UserService {
     const userNew = userBuilder();
 
     let entitySaved: E[];
-    let userSaved: User[];
+    // let userSaved: User[];
 
     try {
-      userSaved = await queryRunner.manager.save(userNew);
+      // userSaved = 
+      await queryRunner.manager.save(userNew);
       entitySaved = await queryRunner.manager.save(entityNew);
 
       await queryRunner.commitTransaction();

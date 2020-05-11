@@ -31,18 +31,25 @@ export class Kuis {
   @Column({ length: 1 })
   kunci: string;
 
+  @Column()
+  _guru: string;
+  
+  @Column()
+  _kategoriKuis: string;
+
   @ManyToOne(
-    (type) => KategoriKuis,
+    () => KategoriKuis,
     (katKuis) => katKuis.kuis,
     { onDelete: 'CASCADE' },
   )
-  @JoinColumn()
+  @JoinColumn({name: '_kategoriKuis'})
   kategoriKuis: KategoriKuis;
 
   @ManyToOne(
-    (type) => Guru,
+    () => Guru,
     (guru) => guru.kuis,
     { onDelete: 'CASCADE' },
   )
+  @JoinColumn({name: '_guru'})
   guru: Guru;
 }

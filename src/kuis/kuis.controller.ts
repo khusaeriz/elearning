@@ -4,6 +4,7 @@ import { KuisService } from './kuis.service';
 import { GetUser } from '../user/user.decorator';
 import { UserDetail } from '../user/user-detail.interface';
 import { Guru } from '../user/entities/guru.entity';
+import { CreateKuisBulkDto } from './dto/createKuis.dto';
 
 @Controller('kuis')
 export class KuisController {
@@ -13,12 +14,12 @@ export class KuisController {
   async index(@GetUser() user: UserDetail) {
     if (user.hakAkses === 'guru') {
       const detail = user.detail as Guru;
+
       return {
         error: false,
         data: await this.kuisService.getAllForGuru(detail),
       };
     } else if (user.hakAkses === 'murid') {
-      
       const detail = user.detail as Guru;
       return {
         error: false,
@@ -38,6 +39,16 @@ export class KuisController {
 
     try {
       const kuis = await this.kuisService.create(detail, data);
+      return { error: false, data: kuis };
+    } catch (error) {
+      return { error: true, message: error.toString() };
+    }
+  }
+
+  @Post('save-soal')
+  async saveSoal(@Body() dto: CreateKuisBulkDto, @GetUser() user: UserDetail) {
+    try {
+      const kuis = await this.kuisService.saveSoal(user.detail as Guru, dto);
       return { error: false, data: kuis };
     } catch (error) {
       return { error: true, message: error.toString() };
