@@ -1,1 +1,1 @@
-npm i && node src/install.js && npm run start
+npm i && node src/install.js && npm run front:build && npm run start

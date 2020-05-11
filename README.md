@@ -3,7 +3,7 @@
 ## Instalasi
 
 software requirement:
-- [nodejs](nodejs.org)
+- [nodejs](https://nodejs.org) versi 12.16.3 LTS
 - Database mysql/postgresql
 
 Setelah menginstall software requirement, jalankan file ```install.bat``` untuk menginstall dependecy dan memulai aplikasi.  

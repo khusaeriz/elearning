@@ -2,7 +2,7 @@ import { Entity, Column, OneToOne } from 'typeorm';
 import { Guru } from './guru.entity';
 import { Murid } from './murid.entity';
 
-@Entity()
+@Entity('users')
 export class User {
   @Column({ length: 100, primary: true })
   username: string;
@@ -13,7 +13,7 @@ export class User {
   @Column({ length: 100 })
   nama: string;
 
-  @Column({ length: 10 })
+  @Column({ length: 10, name: 'hak_akses' })
   hakAkses: 'murid' | 'guru' | 'admin';
 
   @OneToOne(

@@ -4,6 +4,7 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 const figlet = require('figlet');
 const fs = require('fs');
+const typeorm = require('typeorm');
 
 const _config = require(__dirname + '/../ormconfig.json');
 
@@ -90,12 +91,17 @@ const run = async () => {
 
   console.log('menyimpan konfigurasi');
 
-  fs.writeFile(
+  fs.writeFileSync(
     __dirname + '/../ormconfig.json',
     JSON.stringify(_config, null, 2),
     'utf-8',
     (err) => (err ? console.log(err) : null),
   );
+
+  await typeorm.createConnection(_config);
+  const manager = await typeorm.getManager();
+  await manager.query(`INSERT INTO users(username, password, nama, hak_akses) VALUES('admin', 'admin', 'administrator', 'admin');`)
+  
 };
 
 run();
