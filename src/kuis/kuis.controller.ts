@@ -5,6 +5,7 @@ import { GetUser } from '../user/user.decorator';
 import { UserDetail } from '../user/user-detail.interface';
 import { Guru } from '../user/entities/guru.entity';
 import { CreateKuisBulkDto } from './dto/createKuis.dto';
+import { Murid } from '../user/entities/murid.entity';
 
 @Controller('kuis')
 export class KuisController {
@@ -20,10 +21,10 @@ export class KuisController {
         data: await this.kuisService.getAllForGuru(detail),
       };
     } else if (user.hakAkses === 'murid') {
-      const detail = user.detail as Guru;
+      const detail = user.detail as Murid;
       return {
         error: false,
-        data: await this.kuisService.getAllForGuru(detail),
+        data: await this.kuisService.getAllForMurid(detail),
       };
     }
   }

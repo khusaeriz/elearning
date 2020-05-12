@@ -6,6 +6,7 @@ import { KategoriKuis } from './entity/kategoriKuis.entity';
 import { Guru } from '../user/entities/guru.entity';
 import { CreateKuisBulkDto } from './dto/createKuis.dto';
 import { Kuis } from './entity/kuis.entity';
+import { Murid } from '../user/entities/murid.entity';
 
 @Injectable()
 export class KuisService {
@@ -29,6 +30,10 @@ export class KuisService {
     }
 
     return this.katKuisRepo.find(options);
+  }
+
+  async getAllForMurid(murid: Murid) {
+    return this.katKuisRepo.find({relations: ['guru', 'matpel']});
   }
 
   /**

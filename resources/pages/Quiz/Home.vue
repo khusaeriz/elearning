@@ -24,8 +24,11 @@
           <td>{{ item.matpel.namaMatpel }}</td>
           <td v-if="getRole() == 'admin'">{{ item.guru.nama }}</td>
           <td>
-            <router-link :to="'/quiz/tambah-soal/' + item.idKategoriKuis">
+            <router-link :to="'/quiz/tambah-soal/' + item.idKategoriKuis" v-if="getRole() == 'guru'">
               <v-icon name="edit"></v-icon>
+            </router-link>
+            <router-link :to="'/quiz/kerjakan/' + item.idKategoriKuis" v-if="getRole() == 'murid'">
+              <v-icon name="send"></v-icon>
             </router-link>
           </td>
         </tr>
