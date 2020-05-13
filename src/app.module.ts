@@ -8,9 +8,10 @@ import { MatpelModule } from './matpel/matpel.module';
 import { KuisModule } from './kuis/kuis.module';
 import { KonsultasiModule } from './konsultasi/konsultasi.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { ForumModule } from './forum/forum.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UserModule, MatpelModule, KuisModule, KonsultasiModule, DashboardModule],
+  imports: [TypeOrmModule.forRoot(), UserModule, MatpelModule, KuisModule, KonsultasiModule, DashboardModule, ForumModule],
   controllers: [AppController],
   providers: [AppService, UserService],
 })

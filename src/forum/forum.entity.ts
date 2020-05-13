@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {Comment} from './comment.entity';
 
 @Entity()
 export class Forum {
@@ -19,4 +20,7 @@ export class Forum {
 
   @Column()
   tanggal: Date;
+
+  @OneToMany(() => Comment, comment => comment.forum)
+  comments: Comment[]
 }
