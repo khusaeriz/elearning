@@ -9,6 +9,7 @@ import {
 import { Matpel } from '../../matpel/entities/matpel.entity';
 import { Guru } from '../../user/entities/guru.entity';
 import { Kuis } from './kuis.entity';
+import { Nilai } from './nilai.entity';
 
 @Entity()
 export class KategoriKuis {
@@ -26,6 +27,8 @@ export class KategoriKuis {
 
   @Column()
   _guru: string;
+
+  nilai: Nilai;
 
   @OneToMany(
     () => Kuis,

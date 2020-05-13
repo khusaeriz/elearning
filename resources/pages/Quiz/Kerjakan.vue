@@ -19,7 +19,7 @@
             D. {{ kuis.kuis[soalActive].d }}
           </div>
           <div class="col-md-2" style="cursor:pointer" @click="jawab('d')">
-            Jawaban : {{ kuis.kuis[soalActive].jawaban.toUpperCase() }}
+            Jawaban : {{ kuis.kuis[soalActive].kunci.toUpperCase() }}
           </div>
         </div>
       </div>
@@ -32,17 +32,17 @@
             :key="`${index}_soal`"
             :class="{
               'col-md-2 border rounded text-center p-2 m-1 font-weight-bold': true,
-              'bg-primary border-blue text-white ': soal.jawaban != '',
-              'bg-light text-dark border-dark': soal.jawaban == '',
+              'bg-primary border-blue text-white ': soal.kunci != '',
+              'bg-light text-dark border-dark': soal.kunci == '',
             }"
             style="cursor:pointer"
             @click="gantiSoal(index)"
           >
-            <div v-if="soal.jawaban == ''">
+            <div v-if="soal.kunci == ''">
               {{ index + 1 }}
             </div>
             <div v-else>
-              {{ soal.jawaban.toUpperCase() }}
+              {{ soal.kunci.toUpperCase() }}
             </div>
           </div>
           <div class="col-md-12 mt-3">
@@ -63,12 +63,13 @@ export default {
       kuis: null,
       soalActive: 0,
       mockSoal: {
+        idKuis: '',
         soal: '',
         a: '',
         b: '',
         c: '',
         d: '',
-        jawaban: '',
+        kunci: '',
       },
     };
   },
@@ -86,6 +87,7 @@ export default {
 
         for (const [key, soal] of Object.entries(this.kuis.kuis)) {
           const userSoal = { ...this.mockSoal };
+          userSoal.idKuis = soal.idKuis;
           userSoal.soal = soal.soal;
           userSoal.a = soal.a;
           userSoal.b = soal.b;
@@ -100,22 +102,41 @@ export default {
       this.soalActive = nomor;
     },
     jawab(pilihan) {
-      this.kuis.kuis[this.soalActive].jawaban = pilihan;
+      this.kuis.kuis[this.soalActive].kunci = pilihan;
 
       this.$forceUpdate();
     },
 
     async kirimJawaban() {
+      // TODO: kalkulasi nilai di server
+
+    //   const countDiJawab = this.kuis.kuis.reduce((c, el) => {
+    //     if (el.kunci != '') {
+    //       return c++;
+    //     }
+
+    //     return c;
+    //   }, 0);
+
+      const confirm = window.confirm(
+        'Anda yakin akan mengirim jawaban?',
+      );
+
+      if (!confirm) {
+        return;
+      }
+
       this.$root.$emit('loading-on');
+
       try {
-        await this.$http.post('/kuis/kirim-jawaban', {
-          jawaban: this.kuis.kuis,
+        await this.$http.post('/kuis/kalkulasi-nilai', {
+          kuis: this.kuis,
         });
       } catch (error) {
         window.alert('gagal mengirim jawaban');
       }
 
-      this.$root.$emit('loading-on');
+      this.$nextTick(() => this.$root.$emit('loading-off'));
     },
   },
 };

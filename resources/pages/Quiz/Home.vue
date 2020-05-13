@@ -13,6 +13,7 @@
           <th>Jumlah Soal</th>
           <th>Mata Pelajaran</th>
           <th v-if="getRole() == 'admin'">Guru</th>
+          <th v-if="getRole() == 'murid'">Nilai</th>
           <th width="5%"></th>
         </tr>
       </thead>
@@ -23,11 +24,12 @@
           <td>{{ item.jumlahSoal }}</td>
           <td>{{ item.matpel.namaMatpel }}</td>
           <td v-if="getRole() == 'admin'">{{ item.guru.nama }}</td>
+          <td v-if="getRole() == 'murid'">{{ item.nilai == null ? '-' : item.nilai.nilai }}</td>
           <td>
             <router-link :to="'/quiz/tambah-soal/' + item.idKategoriKuis" v-if="getRole() == 'guru'">
               <v-icon name="edit"></v-icon>
             </router-link>
-            <router-link :to="'/quiz/kerjakan/' + item.idKategoriKuis" v-if="getRole() == 'murid'">
+            <router-link :to="'/quiz/kerjakan/' + item.idKategoriKuis" v-if="getRole() == 'murid' && item.nilai == null">
               <v-icon name="send"></v-icon>
             </router-link>
           </td>

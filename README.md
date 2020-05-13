@@ -14,8 +14,8 @@ setelah aplikasi berjalan, buka browser lalu masuk ke http://localhost:3000
 ## Fitur
 
 ## TODO
-- [ ] Aksi jawab pertanyaan dari murid di modul konsultasi (guru)
-- [ ] Halaman untuk membuat pertanyaa kuis (guru)
-- [ ] Halaman untuk mengerjakan kuis (murid)
+- [x] Aksi jawab pertanyaan dari murid di modul konsultasi (guru)
+- [x] Halaman untuk membuat pertanyaan kuis (guru)
+- [x] Halaman untuk mengerjakan kuis (murid)
 - [ ] Tampilkan daftar quis di admin
 - [ ] Modul Forum

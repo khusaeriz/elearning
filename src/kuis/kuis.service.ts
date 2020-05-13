@@ -7,6 +7,8 @@ import { Guru } from '../user/entities/guru.entity';
 import { CreateKuisBulkDto } from './dto/createKuis.dto';
 import { Kuis } from './entity/kuis.entity';
 import { Murid } from '../user/entities/murid.entity';
+import { Nilai } from './entity/nilai.entity';
+import { KalkulasiNilaiDTO } from './dto/kalkulasiNilai.dto';
 
 @Injectable()
 export class KuisService {
@@ -14,6 +16,7 @@ export class KuisService {
     @InjectRepository(KategoriKuis)
     private katKuisRepo: Repository<KategoriKuis>,
     @InjectRepository(Kuis) private kuisRepo: Repository<Kuis>,
+    @InjectRepository(Nilai) private nilaiRepo: Repository<Nilai>,
   ) {}
 
   /**
@@ -33,7 +36,59 @@ export class KuisService {
   }
 
   async getAllForMurid(murid: Murid) {
-    return this.katKuisRepo.find({relations: ['guru', 'matpel']});
+    const kuis = await this.katKuisRepo.find({ relations: ['guru', 'matpel'] });
+    const nilais = await this.nilaiRepo.find({ where: { murid } });
+
+    const kuisWithNilai = kuis.map((k) => {
+      const nilai = nilais.find((e) => e._katKuis === k.idKategoriKuis) ?? null;
+      k.nilai = nilai;
+
+      return k;
+    });
+
+    return kuisWithNilai;
+  }
+
+  /**
+   * kalkulasiNilai
+   */
+  public async kalkulasiNilai(murid: Murid, dto: KalkulasiNilaiDTO) {
+    const kuis = dto.kuis;
+    const katKuis = await this.katKuisRepo.findOne(kuis.idKategoriKuis, {
+      relations: ['kuis'],
+    });
+
+    let nilai = await this.nilaiRepo.findOne({ where: { murid, katKuis } });
+
+    if (nilai != null) {
+      throw 'Murid sudah mengerjakan soal.';
+    }
+
+    nilai = this.nilaiRepo.create();
+    nilai.murid = murid;
+    nilai.katKuis = kuis;
+    nilai.tanggalUjian = new Date();
+
+    const totalJawabanBenar = katKuis.kuis.reduce((c, e) => {
+      const jawabanMurid = kuis.kuis.find((el) => el.idKuis === e.idKuis);
+
+      if (jawabanMurid == null) {
+        return c;
+      }
+
+      if (e.kunci === jawabanMurid.kunci) {
+        return c + 1;
+      }
+
+      return c;
+    }, 0);
+
+    console.log(totalJawabanBenar);
+
+    nilai.nilai = (totalJawabanBenar / katKuis.kuis.length) * 100;
+    await this.nilaiRepo.insert(nilai);
+
+    return nilai;
   }
 
   /**

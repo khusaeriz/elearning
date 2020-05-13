@@ -6,9 +6,10 @@ import { Kuis } from './entity/kuis.entity';
 import { KategoriKuisController } from './kategori-kuis/kategori-kuis.controller';
 import { KategoriKuis } from './entity/kategoriKuis.entity';
 import { UserMiddleware } from '../user/user.middleware';
+import { Nilai } from './entity/nilai.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Kuis, KategoriKuis]), UserMiddleware],
+  imports: [TypeOrmModule.forFeature([Kuis, KategoriKuis, Nilai]), UserMiddleware],
   exports: [TypeOrmModule],
   controllers: [KuisController, KategoriKuisController],
   providers: [KuisService],

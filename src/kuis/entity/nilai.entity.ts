@@ -1,6 +1,13 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+} from 'typeorm';
 import { Murid } from '../../user/entities/murid.entity';
 import { Matpel } from '../../matpel/entities/matpel.entity';
+import { KategoriKuis } from './kategoriKuis.entity';
 
 @Entity()
 export class Nilai {
@@ -13,15 +20,22 @@ export class Nilai {
   @Column()
   nilai: number;
 
+  @Column()
+  _katKuis: number;
+
   @ManyToOne(
-    (type) => Murid,
+    () => Murid,
     (murid) => murid.nilai,
     { onDelete: 'CASCADE' },
   )
   murid: Murid;
 
+  @ManyToOne(() => KategoriKuis, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: '_katKuis' })
+  katKuis: KategoriKuis;
+
   @ManyToOne(
-    (type) => Matpel,
+    () => Matpel,
     (matpel) => matpel.nilai,
     { onDelete: 'CASCADE' },
   )

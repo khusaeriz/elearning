@@ -6,6 +6,7 @@ import { UserDetail } from '../user/user-detail.interface';
 import { Guru } from '../user/entities/guru.entity';
 import { CreateKuisBulkDto } from './dto/createKuis.dto';
 import { Murid } from '../user/entities/murid.entity';
+import { KalkulasiNilaiDTO } from './dto/kalkulasiNilai.dto';
 
 @Controller('kuis')
 export class KuisController {
@@ -51,6 +52,21 @@ export class KuisController {
     try {
       const kuis = await this.kuisService.saveSoal(user.detail as Guru, dto);
       return { error: false, data: kuis };
+    } catch (error) {
+      return { error: true, message: error.toString() };
+    }
+  }
+
+  @Post('kalkulasi-nilai')
+  async kalkulasiNilai(
+    @Body() dto: KalkulasiNilaiDTO,
+    @GetUser() user: UserDetail,
+  ) {
+    try {
+      const murid = user.detail as Murid;
+      const nilai = await this.kuisService.kalkulasiNilai(murid, dto);
+
+      return { error: false, data: nilai };
     } catch (error) {
       return { error: true, message: error.toString() };
     }
