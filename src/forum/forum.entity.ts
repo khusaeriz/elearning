@@ -9,9 +9,6 @@ export class Forum {
   @Column({ length: 100 })
   username: string;
 
-  @Column({ length: 100 })
-  email: string;
-
   @Column({ length: 50 })
   topik: string;
 

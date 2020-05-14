@@ -3,6 +3,9 @@ import { Repository, Like } from 'typeorm';
 import { Forum } from './forum.entity';
 import { Comment } from './comment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateForumDTO } from './dto/createForumDto';
+import { UserDetail } from '../user/user-detail.interface';
+import { CreateCommentDto } from './dto/createCommentDto';
 
 @Injectable()
 export class ForumService {
@@ -11,12 +14,25 @@ export class ForumService {
     @InjectRepository(Comment) private commentRepo: Repository<Comment>,
   ) {}
 
-  createForum(forum: Forum) {
+  createForum(user: UserDetail, dto: CreateForumDTO) {
+    const forum = new Forum();
+    forum.topik = dto.judul;
+    forum.isi = dto.isi;
+    forum.username = user.username;
+    forum.tanggal = new Date();
+
     return this.forumRepo.save(forum);
   }
 
-  createComment(comment: Comment) {
-    return this.commentRepo.save(comment);
+  createComment(user: UserDetail, comment: CreateCommentDto) {
+    const newComment = new Comment();
+    newComment.username = user.username;
+    newComment.content = comment.komen;
+    newComment.forum = Object.assign(this.forumRepo.create(), {
+      idTopik: comment.forumId,
+    }) as Forum;
+
+    return this.commentRepo.save(newComment);
   }
 
   getAllForum() {

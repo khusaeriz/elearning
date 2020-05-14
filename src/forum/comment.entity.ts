@@ -7,6 +7,9 @@ export class Comment {
     id: number;
 
     @Column()
+    username: string;
+
+    @Column()
     content: string;
 
     @ManyToOne(() => Forum, forum => forum.comments)
