@@ -26,7 +26,7 @@
     "@ckeditor/ckeditor5-vue": "^1.0.1",
     "@nestjs/common": "^6.10.14",
     "@nestjs/core": "^6.10.14",
-    "@nestjs/platform-express": "^6.10.14",
+    "@nestjs/platform-express": "^9.2.1",
     "@nestjs/typeorm": "^7.0.0",
     "axios": "^0.19.2",
     "bootstrap": "^4.3.1",
